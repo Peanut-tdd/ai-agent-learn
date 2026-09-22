@@ -1,0 +1,4 @@
+fastapi
+uvicorn
+flagembedding>=1.4
+requests

@@ -1,0 +1,11 @@
+# 虚拟环境 / Python 缓存
+.venv/
+__pycache__/
+*.pyc
+
+# 运行产物
+*.log
+server_smoke.log
+
+# 本地环境变量(示例在 .env.example, 真实密钥不进库)
+.env

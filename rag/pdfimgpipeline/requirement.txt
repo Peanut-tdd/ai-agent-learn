@@ -1,0 +1,13 @@
+# 运行期依赖（等价于 pyproject.toml 的 [project].dependencies）
+opencv-python>=4.8
+numpy>=1.24
+redis>=4.2
+rapidocr-onnxruntime>=1.2; python_version < "3.13"
+onnxruntime>=1.17,<1.22; python_version < "3.13"
+openai>=1.40
+python-dotenv>=1.0
+pydantic>=2.5
+pydantic-settings>=2.1
+fastapi>=0.110
+uvicorn[standard]>=0.27
+python-multipart>=0.0.9

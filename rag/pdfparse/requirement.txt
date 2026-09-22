@@ -1,0 +1,4 @@
+pymupdf
+# 可选：Redis 缓存后端。未安装或未启动时 pdfagent 自动降级为进程内内存缓存。
+redis>=4.2
+describe_images

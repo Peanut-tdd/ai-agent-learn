@@ -1,0 +1,4 @@
+openai==2.9.0
+python-dotenv
+requests
+fastmcp==4.0.5

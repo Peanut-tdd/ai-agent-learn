@@ -1,0 +1,30 @@
+# pdfimgpipeline —— 用户级 systemd 托管（开机自启、崩溃拉起、日志轮转）
+#
+# 安装（先把 WorkingDirectory / ExecStart / EnvironmentFile 改成你的路径）:
+#   mkdir -p ~/.config/systemd/user
+#   cp deploy/pdfimgpipeline.service ~/.config/systemd/user/
+#   cp .env.example ~/.config/pdfimgpipeline.env   # 再填密钥
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now pdfimgpipeline
+#   systemctl --user status pdfimgpipeline
+#   journalctl --user -u pdfimgpipeline -f
+# 开机自启需允许 linger: loginctl enable-linger $USER
+
+[Unit]
+Description=pdfimgpipeline OCR/VLM routing service (FastAPI)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=%h/.config/pdfimgpipeline.env
+WorkingDirectory=/Users/tdd/Documents/project/python/ai-agent-learn/pdfimgpipeline
+ExecStart=/Users/tdd/Documents/project/python/ai-agent-learn/pdfimgpipeline/.venv/bin/uvicorn \
+    pdfimgpipeline.service.app:app --host 0.0.0.0 --port 8000 --no-access-log
+Restart=on-failure
+RestartSec=3
+KillSignal=SIGTERM
+TimeoutStopSec=60
+
+[Install]
+WantedBy=default.target

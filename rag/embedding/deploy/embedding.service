@@ -1,0 +1,33 @@
+# bge-m3 嵌入服务 —— 用户级 systemd 托管 (开机自启、崩溃自动拉起、日志轮转)
+#
+# 安装步骤 (先按你的机器把下面 WorkingDirectory / ExecStart 两处路径改对):
+#   mkdir -p ~/.config/systemd/user
+#   cp deploy/embedding.service ~/.config/systemd/user/
+#   # 环境变量文件(不存在服务会启动失败)。可先复制示例再改:
+#   cp .env.example ~/.config/embedding.env
+#   # 至少放进去: HF_HUB_OFFLINE=1 (模型已缓存时) 与 EMBED_API_KEY(可选)
+#
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now embedding
+#   systemctl --user status embedding        # 看状态
+#   journalctl --user -u embedding -f        # 看日志
+#   开机自启需允许 linger (否则只在登录后运行): loginctl enable-linger $USER
+
+[Unit]
+Description=bge-m3 embedding service (FastAPI, server-side batching)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=%h/.config/embedding.env
+WorkingDirectory=/Users/tdd/Documents/project/python/ai-agent-learn/embedding
+ExecStart=/Users/tdd/Documents/project/python/ai-agent-learn/embedding/.venv/bin/uvicorn server:app --host 0.0.0.0 --port 8001 --no-access-log
+Restart=on-failure
+RestartSec=3
+# SIGTERM -> uvicorn 优雅退出: 排空在途请求(攒批器 executor 收尾)再卸载模型
+KillSignal=SIGTERM
+TimeoutStopSec=90
+
+[Install]
+WantedBy=default.target
