@@ -1,0 +1,8 @@
+# 环境变量（真实密钥不进库；示例保留在 .env.example）
+.env
+.env.*
+!.env.example
+
+# 日志
+*.log
+logs/
