@@ -1,8 +1,66 @@
-# 环境变量（真实密钥不进库；示例保留在 .env.example）
+# ---------- 环境变量（真实密钥不进库；示例保留在 .env.example）----------
 .env
 .env.*
 !.env.example
 
-# 日志
+# ---------- 日志 ----------
 *.log
 logs/
+
+# ---------- Python 运行产生的临时文件 ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+.eggs/
+build/
+dist/
+wheels/
+pip-wheel-metadata/
+MANIFEST
+
+# 虚拟环境
+.venv/
+venv/
+ENV/
+env/
+
+# 测试 / 类型检查 / 覆盖率缓存
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+.hypothesis/
+
+# 交互式运行历史
+.ipython/
+.ipynb_checkpoints/
+
+# ---------- 运行产物 ----------
+out/
+outputs/
+vec_store/
+*.sqlite3
+*.db
+
+# ---------- IDE / 编辑器 ----------
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+
+# ---------- 操作系统 ----------
+.DS_Store
+Thumbs.db
+desktop.ini
